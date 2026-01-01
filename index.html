@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Update 2.0 | Dream Makers Youth & Sports Club</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+Sinhala:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+<link rel="icon" type="image/png" href="https://scontent.fcmb2-2.fna.fbcdn.net/v/t39.30808-6/599907579_122173973480395872_6207343967667686790_n.jpg">
+    
+    <style>
+        body { 
+            font-family: 'Outfit', 'Noto Sans Sinhala', sans-serif; 
+            background-color: #0B1120;
+            background-image: radial-gradient(#1e293b 1px, transparent 1px);
+            background-size: 40px 40px;
+            color: #E2E8F0;
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+            justify-content: center; 
+            align-items: center; 
+            margin: 0; 
+            overflow-x: hidden;
+            padding: 1rem; /* Prevent edge touching on mobile */
+        }
+        
+        .maintenance-card { 
+            background: rgba(21, 31, 50, 0.85); 
+            backdrop-filter: blur(12px);
+            /* Responsive Padding set in utility classes, fallback here */
+            border-radius: 2rem; 
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6); 
+            max-width: 900px; 
+            width: 100%; 
+            text-align: center; 
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        /* Language Switcher */
+        .lang-switch {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 50;
+        }
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            padding: 0.3rem 0.6rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .lang-btn.active {
+            background: #10B981;
+            color: white;
+            border-color: #10B981;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Float Animation */
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+
+        /* Progress Rings */
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        
+        /* Countdown Layout */
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem; /* Smaller gap for mobile */
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+        
+        /* Responsive Countdown Items */
+        .countdown-item {
+            position: relative;
+            width: 85px;  /* Smaller default for mobile */
+            height: 85px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Laptop/Tablet adjustments */
+        @media (min-width: 768px) {
+            .countdown-item {
+                width: 110px;
+                height: 110px;
+            }
+            .countdown-container {
+                gap: 2rem;
+                margin: 3rem 0;
+            }
+        }
+        
+        .countdown-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: rotate(0deg); /* Fix SVG rotation issue */
+        }
+
+        .countdown-content {
+            z-index: 10;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .countdown-val {
+            font-size: 1.5rem; /* Mobile Size */
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+            font-family: 'Outfit', sans-serif;
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        }
+        
+        @media (min-width: 768px) {
+            .countdown-val { font-size: 2rem; }
+        }
+
+        .countdown-label {
+            font-size: 0.6rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.2rem;
+            font-weight: 600;
+        }
+
+        /* Buttons */
+        .btn-social {
+            transition: all 0.3s ease;
+        }
+        .btn-social:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.25);
+        }
+
+        /* Background Glow */
+        .bg-glow {
+            position: absolute;
+            width: 100vw;
+            height: 100vw;
+            max-width: 600px;
+            max-height: 600px;
+            background: radial-gradient(circle, rgba(16,185,129,0.15) 0%, rgba(0,0,0,0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Glow -->
+    <div class="bg-glow animate-pulse"></div>
+
+    <!-- Main Card -->
+    <!-- Responsive padding: p-6 on mobile, p-12 on desktop -->
+    <div class="maintenance-card p-6 md:p-12 animate__animated animate__zoomIn">
+        
+        <!-- Language Switcher -->
+        <div class="lang-switch flex gap-2">
+            <button onclick="switchLanguage('en')" id="btn-en" class="lang-btn active">EN</button>
+            <button onclick="switchLanguage('si')" id="btn-si" class="lang-btn">SI</button>
+        </div>
+
+        <!-- Logo & Club Name -->
+        <div class="mb-6 animate-float flex flex-col items-center justify-center">
+            <!-- Responsive Logo Size -->
+            <div class="w-24 h-24 md:w-32 md:h-32 rounded-full border-2 border-emerald-500/30 p-1 shadow-[0_0_30px_rgba(16,185,129,0.3)] mb-4 bg-black/40 overflow-hidden">
+                <img src="https://scontent.fcmb2-2.fna.fbcdn.net/v/t39.30808-6/599907579_122173973480395872_6207343967667686790_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=jvIw-j2A13AQ7kNvwFRSMeQ&_nc_oc=AdmTZmsCMm_XttbVpv1kDXFxA8p7ofY_H-Td6fB2HiX5Nz9PA3RDwcTg9nXbJ31rAUo&_nc_zt=23&_nc_ht=scontent.fcmb2-2.fna&_nc_gid=qS5dhsGC31i0muDvg4K3jg&oh=00_AfkS7dABI-Poyb8Idk7oqofRybOy6gitSZlRuKG8_umNmw&oe=6958A5CF" 
+                     alt="Dream Makers Youth & Sports Club Logo" 
+                     class="w-full h-full rounded-full object-cover transform hover:scale-110 transition-transform duration-500">
+            </div>
+            <h3 class="text-emerald-500/90 font-bold tracking-widest text-[0.7rem] md:text-sm uppercase bg-emerald-500/10 px-4 py-1.5 rounded-full border border-emerald-500/20 shadow-sm">Dream Makers Youth & Sports Club</h3>
+        </div>
+        
+        <!-- Main Heading -->
+        <h1 class="text-3xl md:text-6xl font-bold text-white mb-2 animate__animated animate__fadeInUp animate__delay-1s tracking-tight drop-shadow-lg">
+            SYSTEM UPDATE <span class="text-emerald-500">2.0</span>
+        </h1>
+        
+        <!-- Subtitle & Description -->
+        <h2 id="subtitle" class="text-lg md:text-2xl text-emerald-400 font-medium mb-4 animate__animated animate__fadeInUp animate__delay-1s min-h-[1.5em] flex items-center justify-center">
+            System Update in Progress...
+        </h2>
+        
+        <p id="description" class="text-slate-400 mb-8 leading-relaxed max-w-2xl mx-auto text-sm md:text-lg animate__animated animate__fadeInUp animate__delay-1s px-2">
+            Our system is scheduled to be updated with a new look. Get ready for a brand new experience by <span class="text-emerald-300 font-semibold whitespace-nowrap">January 02, 2026 at 7.00 PM</span>.
+        </p>
+        
+        <!-- Circular Countdown -->
+        <div class="countdown-container animate__animated animate__fadeInUp animate__delay-2s">
+            
+            <!-- Days -->
+            <div class="countdown-item">
+                <svg class="countdown-svg" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" stroke="#1e293b" stroke-width="6" fill="transparent"></circle>
+                    <circle id="ring-days" class="progress-ring__circle" cx="50" cy="50" r="45" stroke="#10B981" stroke-width="6" fill="transparent" stroke-dasharray="283" stroke-dashoffset="283" stroke-linecap="round"></circle>
+                </svg>
+                <div class="countdown-content">
+                    <span id="days" class="countdown-val">00</span>
+                    <span id="label-days" class="countdown-label">DAYS</span>
+                </div>
+            </div>
+
+            <!-- Hours -->
+            <div class="countdown-item">
+                <svg class="countdown-svg" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" stroke="#1e293b" stroke-width="6" fill="transparent"></circle>
+                    <circle id="ring-hours" class="progress-ring__circle" cx="50" cy="50" r="45" stroke="#3b82f6" stroke-width="6" fill="transparent" stroke-dasharray="283" stroke-dashoffset="283" stroke-linecap="round"></circle>
+                </svg>
+                <div class="countdown-content">
+                    <span id="hours" class="countdown-val">00</span>
+                    <span id="label-hours" class="countdown-label">HOURS</span>
+                </div>
+            </div>
+
+            <!-- Minutes -->
+            <div class="countdown-item">
+                <svg class="countdown-svg" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" stroke="#1e293b" stroke-width="6" fill="transparent"></circle>
+                    <circle id="ring-minutes" class="progress-ring__circle" cx="50" cy="50" r="45" stroke="#f59e0b" stroke-width="6" fill="transparent" stroke-dasharray="283" stroke-dashoffset="283" stroke-linecap="round"></circle>
+                </svg>
+                <div class="countdown-content">
+                    <span id="minutes" class="countdown-val">00</span>
+                    <span id="label-minutes" class="countdown-label">MINS</span>
+                </div>
+            </div>
+
+            <!-- Seconds -->
+            <div class="countdown-item">
+                <svg class="countdown-svg" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" stroke="#1e293b" stroke-width="6" fill="transparent"></circle>
+                    <circle id="ring-seconds" class="progress-ring__circle" cx="50" cy="50" r="45" stroke="#ef4444" stroke-width="6" fill="transparent" stroke-dasharray="283" stroke-dashoffset="283" stroke-linecap="round"></circle>
+                </svg>
+                <div class="countdown-content">
+                    <span id="seconds" class="countdown-val">00</span>
+                    <span id="label-seconds" class="countdown-label">SECS</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Social Buttons -->
+        <!-- Stacked on mobile (w-full), Row on Tablet+ (w-auto) -->
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8 animate__animated animate__fadeInUp animate__delay-3s w-full max-w-2xl mx-auto">
+            <a href="https://www.facebook.com/profile.php?id=61585478932161" target="_blank" 
+               class="btn-social w-full sm:w-auto flex-1 flex items-center justify-center gap-3 px-6 py-3.5 rounded-xl bg-[#1877F2]/10 border border-[#1877F2]/30 text-[#1877F2] hover:bg-[#1877F2] hover:text-white text-sm md:text-base font-semibold group">
+                <i class="fa-brands fa-facebook-f group-hover:animate-bounce"></i> <span id="btn-fb">Facebook</span>
+            </a>
+
+            <a href="https://www.whatsapp.com/channel/0029Vb7AQ1bEKyZKwmjeYt0F" target="_blank" 
+               class="btn-social w-full sm:w-auto flex-1 flex items-center justify-center gap-3 px-6 py-3.5 rounded-xl bg-[#25D366]/10 border border-[#25D366]/30 text-[#25D366] hover:bg-[#25D366] hover:text-white text-sm md:text-base font-semibold group">
+                <i class="fa-brands fa-whatsapp group-hover:animate-bounce"></i> <span id="btn-wa">Channel</span>
+            </a>
+            
+            <a href="mailto:dreammakersysc@gmail.com" 
+               class="btn-social w-full sm:w-auto flex-1 flex items-center justify-center gap-3 px-6 py-3.5 rounded-xl bg-slate-700/30 border border-slate-600/30 text-slate-300 hover:bg-slate-700 hover:text-white text-sm md:text-base font-semibold group">
+                <i class="fa-solid fa-envelope group-hover:animate-bounce"></i> <span id="btn-contact">Contact</span>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="contact-info border-t border-white/10 pt-6 animate__animated animate__fadeIn animate__delay-3s">
+            <p class="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 text-slate-500">
+                <span id="footer-text" class="text-[0.65rem] uppercase tracking-widest opacity-70">Designed By</span>
+                <a href="https://dilnuka13.github.io/my/" target="_blank" class="text-emerald-500 hover:text-emerald-400 font-bold hover:underline flex items-center gap-1.5 transition-colors text-sm">
+                    <i class="fa-solid fa-code text-xs"></i> Isara Dilnuka
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // --- Translations ---
+        const content = {
+            en: {
+                subtitle: "System Update in Progress...",
+                description: "Our system is scheduled to be updated with a new look. Get ready for a brand new experience by <span class='text-emerald-300 font-semibold whitespace-nowrap'>January 02, 2026 at 7.00 PM</span>.",
+                labels: ["DAYS", "HOURS", "MINS", "SECS"],
+                buttons: ["Facebook", "Channel", "Contact"],
+                footer: "Designed By"
+            },
+            si: {
+                subtitle: "පද්ධතිය යාවත්කාලීන වෙමින් පවතී...",
+                description: "අපගේ පද්ධතිය නව මුහුණුවරකින් ඔබ වෙත පැමිණීමට නියමිතයි. <span class='text-emerald-300 font-semibold whitespace-nowrap'>2026.01.01 දින රාත්‍රී 7.00</span> වන විට නවතම අත්දැකීමක් විඳගැනීමට සූදානම් වන්න.",
+                labels: ["දින", "පැය", "මිනිත්තු", "තත්පර"],
+                buttons: ["Facebook", "Channel", "Contact"],
+                footer: "නිර්මාණය සහ සංවර්ධනය"
+            }
+        };
+
+        let currentLang = 'en';
+
+        function switchLanguage(lang) {
+            currentLang = lang;
+            const data = content[lang];
+
+            // Update Text
+            document.getElementById('subtitle').innerText = data.subtitle;
+            document.getElementById('description').innerHTML = data.description;
+            
+            document.getElementById('label-days').innerText = data.labels[0];
+            document.getElementById('label-hours').innerText = data.labels[1];
+            document.getElementById('label-minutes').innerText = data.labels[2];
+            document.getElementById('label-seconds').innerText = data.labels[3];
+
+            document.getElementById('btn-fb').innerText = data.buttons[0];
+            document.getElementById('btn-wa').innerText = data.buttons[1];
+            document.getElementById('btn-contact').innerText = data.buttons[2];
+            document.getElementById('footer-text').innerText = data.footer;
+
+            // Update Active Button State
+            document.getElementById('btn-en').classList.remove('active');
+            document.getElementById('btn-si').classList.remove('active');
+            document.getElementById(`btn-${lang}`).classList.add('active');
+        }
+
+        // --- Countdown Logic ---
+        (function() {
+            const countDownDate = new Date("Jan 2, 2026 19:00:00").getTime();
+            
+            // Circle Config (Matches SVG viewBox 0 0 100 100)
+            const radius = 45;
+            const circumference = 2 * Math.PI * radius;
+            
+            // Set initial dasharray for all rings
+            ['days', 'hours', 'minutes', 'seconds'].forEach(id => {
+                const ring = document.getElementById(`ring-${id}`);
+                if(ring) ring.style.strokeDasharray = `${circumference} ${circumference}`;
+            });
+
+            function setProgress(elementId, value, maxValue) {
+                const ring = document.getElementById(elementId);
+                if (!ring) return;
+                // Offset calculation to simulate draining/filling ring
+                const offset = circumference - (value / maxValue) * circumference;
+                ring.style.strokeDashoffset = offset;
+            }
+
+            const timerInterval = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Update Numbers
+                document.getElementById("days").textContent = String(days).padStart(2, '0');
+                document.getElementById("hours").textContent = String(hours).padStart(2, '0');
+                document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
+                document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
+
+                // Update Rings
+                setProgress('ring-days', days % 365, 365); 
+                setProgress('ring-hours', hours, 24);
+                setProgress('ring-minutes', minutes, 60);
+                setProgress('ring-seconds', seconds, 60);
+
+                if (distance < 0) {
+                    clearInterval(timerInterval);
+                    const container = document.querySelector('.countdown-container');
+                    if(container) {
+                        container.innerHTML = "<div class='text-2xl md:text-4xl text-emerald-500 font-bold animate-pulse uppercase tracking-widest'>SYSTEM LIVE NOW</div>";
+                    }
+                }
+            }, 1000);
+        })();
+    </script>
+</body>
+</html>
